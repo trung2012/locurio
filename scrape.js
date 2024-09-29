@@ -1,7 +1,6 @@
 import playwright from 'playwright';
-import fs from 'fs';
 
-export const scrape = async () => {
+export const scrape = async (day = 5) => {
   const browser = await playwright.chromium.launch();
   const page = await browser.newPage();
 
@@ -24,11 +23,13 @@ export const scrape = async () => {
     const calendar = iframe.locator('.resovaCalendarTimeSlotsOnly');
 
     const row = calendar.locator('tbody').nth(2);
-    const cell = row.locator('td').nth(5);
+
+    const cell = row.locator('td').nth(day - 1);
     await cell.click();
 
+    await page.waitForTimeout(3000);
+
     await iframe.getByText(/Continue/i).click();
-    await page.screenshot({ path: 'screenshot2.png' });
   } catch (err) {
     console.error(err);
   }
