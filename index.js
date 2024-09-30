@@ -10,7 +10,7 @@ setTimeout(() => {
   scrape(6);
 }, 10000);
 
-cron.schedule('*/16 * * * *', () => {
+cron.schedule('*/20 * * * *', () => {
   scrape(5);
 
   setTimeout(() => {
